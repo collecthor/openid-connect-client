@@ -1,0 +1,48 @@
+parameters:
+    reportUnmatchedIgnoredErrors: true
+    dynamicConstantNames:
+      - CONSOLE
+      - YII_DEBUG
+    level: 9
+    paths:
+      - src
+    checkMaybeUndefinedVariables: true
+    checkGenericClassInNonGenericObjectType: false
+    banned_code:
+        nodes:
+            # enable detection of eval
+            -
+                type: Expr_Eval
+                functions: null
+
+            # enable detection of die/exit
+            -
+                type: Expr_Exit
+                functions: null
+
+            # enable detection of a set of functions
+            -
+                type: Expr_FuncCall
+                functions:
+                    - dd
+                    - debug_backtrace
+                    - dump
+                    - exec
+                    - phpinfo
+                    - proc_open
+                    - shell_exec
+                    - system
+                    - codecept_debug
+
+            # enable detection of print statements
+            -
+                type: Expr_Print
+                functions: null
+
+            # enable detection of shell execution by backticks
+            -
+                type: Expr_ShellExec
+                functions: null
+
+        # enable detection of `use Tests\Foo\Bar` in a non-test file
+        use_from_tests: true
