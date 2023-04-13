@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient;
@@ -8,7 +9,6 @@ namespace Collecthor\OpenidConnectClient;
  */
 interface ClaimSetInterface
 {
-
     /**
      * @param string $name
      * @return array<mixed>|scalar
@@ -24,6 +24,4 @@ interface ClaimSetInterface
     public function getExpiration(): int;
 
     public function getIssuedAt(): int;
-
-
 }

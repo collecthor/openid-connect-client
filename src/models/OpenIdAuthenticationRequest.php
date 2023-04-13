@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient\models;
@@ -15,15 +16,14 @@ class OpenIdAuthenticationRequest
         private readonly string|UriInterface $redirect_uri,
         private readonly string $state,
         private readonly array $extraScopes = ['email'],
-
-    )
-    {
+    ) {
     }
 
     /**
      * @return array{response_type: string, client_id: string, redirect_uri: string, state: string, scope: string}
      */
-    public function toQueryParamArray(): array {
+    public function toQueryParamArray(): array
+    {
         return [
             'response_type' => 'code',
             'client_id' => $this->client_id,
@@ -34,6 +34,4 @@ class OpenIdAuthenticationRequest
 
         ];
     }
-
-
 }

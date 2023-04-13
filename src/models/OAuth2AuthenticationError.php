@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient\models;
@@ -21,7 +22,7 @@ enum OAuth2AuthenticationError: string
 
     public function description(): string
     {
-        return match($this) {
+        return match ($this) {
             self::InvalidRequest => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed.',
             default => "Todo: copy texts from https://www.rfc-editor.org/rfc/rfc6749#section-4.1.2"
         };

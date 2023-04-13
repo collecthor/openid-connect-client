@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient;
 
 class IdToken implements ClaimSetInterface
 {
-
     /**
      * @param string $aud
      * @param string $iss
@@ -22,7 +22,6 @@ class IdToken implements ClaimSetInterface
         public readonly int $iat,
         private readonly array $customClaims
     ) {
-
     }
 
     /**
@@ -89,7 +88,7 @@ class IdToken implements ClaimSetInterface
         /**
          * @var mixed $value
          */
-        foreach($claims as $claim => $value) {
+        foreach ($claims as $claim => $value) {
             if (in_array($claim, ['aud', 'iss', 'exp', 'sub', 'iat'])) {
                 continue;
             }
@@ -99,11 +98,13 @@ class IdToken implements ClaimSetInterface
             ) {
                 $customClaims[$claim] = $value;
             }
-
         }
         return new self(
             aud: $claims['aud'],
-            iss: $claims['iss'], exp: $claims['exp'], sub: $claims['sub'], iat: $claims['iat'],
+            iss: $claims['iss'],
+            exp: $claims['exp'],
+            sub: $claims['sub'],
+            iat: $claims['iat'],
             customClaims: $customClaims
         );
     }

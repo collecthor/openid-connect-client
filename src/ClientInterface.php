@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient;
@@ -12,8 +13,8 @@ use Psr\Http\Message\UriInterface;
  */
 interface ClientInterface
 {
-
-    public function createRedirectUrl(UriInterface $discoveryUri,
+    public function createRedirectUrl(
+        UriInterface $discoveryUri,
         string $clientId,
         UriInterface $redirectUri,
         string $sessionId
@@ -25,8 +26,9 @@ interface ClientInterface
      * @return ClaimSetInterface
      * @throws \Exception For any non-successful flow exceptions should be thrown
      */
-    public function handleRequest(ServerRequestInterface $request,
+    public function handleRequest(
+        ServerRequestInterface $request,
         string $sessionId,
-        HttpClient $authenticatedClient): ClaimSetInterface;
-
+        HttpClient $authenticatedClient
+    ): ClaimSetInterface;
 }

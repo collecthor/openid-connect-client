@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient;
@@ -7,6 +8,9 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
+ * This adapter wraps any standard PSR Http Client to provide a simple interface for our OIDC client for retrieving
+ * JSON data
+ *
  * @psalm-api
  */
 class JsonHttpClient
@@ -36,6 +40,4 @@ class JsonHttpClient
         }
         return $result;
     }
-
-
 }

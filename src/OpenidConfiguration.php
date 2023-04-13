@@ -1,13 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient;
 
 use Firebase\JWT\JWK;
 use Firebase\JWT\Key;
-use Psr\Http\Client\ClientInterface as ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -19,7 +17,6 @@ use Psr\Http\Message\UriInterface;
  */
 class OpenidConfiguration
 {
-
     /**
      * @param array<string, Key> $keySet
      */
@@ -27,8 +24,7 @@ class OpenidConfiguration
         public readonly string $authorization_endpoint,
         public readonly string $token_endpoint,
         public readonly array $keySet
-    )
-    {
+    ) {
     }
 
 
@@ -36,11 +32,10 @@ class OpenidConfiguration
     public static function fromDiscoveryUri(
         UriInterface|string $uri,
         JsonHttpClient $client,
-    ): self
-    {
+    ): self {
         $discoveredConfig = $client->getJsonArray($uri);
 
-        if(!isset($discoveredConfig['jwks_uri'], $discoveredConfig['authorization_endpoint'], $discoveredConfig['token_endpoint'])
+        if (!isset($discoveredConfig['jwks_uri'], $discoveredConfig['authorization_endpoint'], $discoveredConfig['token_endpoint'])
             || !is_string($discoveredConfig['jwks_uri'])
             || !is_string($discoveredConfig['authorization_endpoint'])
             || !is_string($discoveredConfig['token_endpoint'])
@@ -56,13 +51,12 @@ class OpenidConfiguration
         $parsedJwks = JWK::parseKeySet($jwks, 'RS256');
 
 
-        return new self(authorization_endpoint: $discoveredConfig['authorization_endpoint'],
-            token_endpoint: $discoveredConfig['token_endpoint'], keySet: $parsedJwks);
+        return new self(
+            authorization_endpoint: $discoveredConfig['authorization_endpoint'],
+            token_endpoint: $discoveredConfig['token_endpoint'],
+            keySet: $parsedJwks
+        );
 
         ;
-
-
-
     }
-
 }

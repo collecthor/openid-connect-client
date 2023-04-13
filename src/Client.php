@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient;
@@ -36,8 +37,7 @@ class Client implements ClientInterface
         string $clientId,
         string|UriInterface $redirectUri,
         string $sessionId
-    ): UriInterface
-    {
+    ): UriInterface {
         $configuration = $this->getConfiguration($discoveryUri);
 
         $authorizationEndpoint = $this->uriFactory->createUri($configuration->authorization_endpoint);
@@ -63,9 +63,11 @@ class Client implements ClientInterface
     }
 
 
-    public function handleStateCode(string $state, string $code, string $sessionId, HttpClient $authenticatedClient): IdToken {
+    public function handleStateCode(string $state, string $code, string $sessionId, HttpClient $authenticatedClient): IdToken
+    {
         $response = OpenIdAuthenticationResponse::fromStateCode(
-            $state, $code,
+            $state,
+            $code,
             $sessionId
         );
         return $this->handleResponse($response, $authenticatedClient);
@@ -102,17 +104,12 @@ class Client implements ClientInterface
 
         // Validate the token:  https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.3.1.3.7
         return IdToken::fromClaims(JWT::decode($data['id_token'], $configuration->keySet));
-
-
-
-
     }
     public function handleRequest(
         ServerRequestInterface $request,
         string $sessionId,
         HttpClient $authenticatedClient
-    ): IdToken
-    {
+    ): IdToken {
         /**
          * This will validate the state.
          * All data on this response object except the `code` can be trusted since it was cryptographically secured

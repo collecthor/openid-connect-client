@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Collecthor\OpenidConnectClient\models;
@@ -14,7 +15,6 @@ class OpenIdAuthenticationResponse
         public readonly string $clientId,
         public readonly string $redirectUri
     ) {
-
     }
 
 
@@ -32,7 +32,7 @@ class OpenIdAuthenticationResponse
 
         $expectedHash = hash_hmac('sha3-512', $stateData, $hashKey);
         if (!hash_equals($expectedHash, $stateHash)) {
-            throw new  \InvalidArgumentException('Invalid state HMAC');
+            throw new \InvalidArgumentException('Invalid state HMAC');
         }
 
         /**
@@ -64,9 +64,7 @@ class OpenIdAuthenticationResponse
         array $queryParams,
         UriFactoryInterface $uriFactory,
         string $hashKey
-    ): self
-    {
-
+    ): self {
         if (isset($queryParams['code'], $queryParams['state'])
             && is_string($queryParams['code'])
             && is_string($queryParams['state'])
@@ -74,7 +72,8 @@ class OpenIdAuthenticationResponse
             return self::fromStateCode($queryParams['state'], $queryParams['code'], $hashKey);
         }
         if (isset($queryParams['error']) && is_string($queryParams['error'])) {
-            throw new OAuth2AuthenticationException(OAuth2AuthenticationError::from($queryParams['error']),
+            throw new OAuth2AuthenticationException(
+                OAuth2AuthenticationError::from($queryParams['error']),
                 isset($queryParams['error_uri']) && is_string($queryParams['error_uri']) ? $uriFactory->createUri($queryParams['error_uri']) : null,
                 isset($queryParams['error_description']) && is_string($queryParams['error_description']) ? $queryParams['error_description'] : null
             );
@@ -82,5 +81,4 @@ class OpenIdAuthenticationResponse
 
         throw new \InvalidArgumentException('params are out of spec');
     }
-
 }
