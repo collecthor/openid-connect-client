@@ -5,16 +5,14 @@ declare(strict_types=1);
 // ecs.php
 use PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
-use Symplify\EasyCodingStandard\ValueObject\Option;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 return static function (ECSConfig $ecsConfig): void {
-    $parameters = $ecsConfig->parameters();
     // Parallel
-    $parameters->set(Option::PARALLEL, true);
+    $ecsConfig->parallel();
 
     // Paths
-    $parameters->set(Option::PATHS, [
+    $ecsConfig->paths([
         __DIR__ . '/src', __DIR__ . '/tests', __DIR__ . '/ecs.php'
 
 
@@ -25,10 +23,6 @@ return static function (ECSConfig $ecsConfig): void {
 
 
     // B. standalone rule
-    $services = $ecsConfig->services();
-    $services->set(ArraySyntaxFixer::class)
-        ->call('configure', [[
-            'syntax' => 'short',
-        ]]);
-    $services->set(\PhpCsFixer\Fixer\Import\NoUnusedImportsFixer::class);
+    $ecsConfig->rule(ArraySyntaxFixer::class);
+    $ecsConfig->rule(\PhpCsFixer\Fixer\Import\NoUnusedImportsFixer::class);
 };
