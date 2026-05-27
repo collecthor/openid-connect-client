@@ -1,3 +1,5 @@
+includes:
+	- vendor/ekino/phpstan-banned-code/extension.neon
 parameters:
     reportUnmatchedIgnoredErrors: true
     dynamicConstantNames:
@@ -7,7 +9,6 @@ parameters:
     paths:
       - src
     checkMaybeUndefinedVariables: true
-    checkGenericClassInNonGenericObjectType: false
     banned_code:
         nodes:
             # enable detection of eval
